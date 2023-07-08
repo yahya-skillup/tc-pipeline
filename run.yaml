@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: tc-pipeline-run-
+spec:
+  serviceAccountName: pipeline-sa
+  pipelineRef:
+    name: tc-pipeline
+  params:
+    - name: repo-url
+      value: "https://github.com/yahya-skillup/tax_calculator.git"
+    - name: branch
+      value: "v2"
+    - name: app-name
+      value: "tax-calculator"
+    - name: build-image
+      value: "us.icr.io/sn-labs-muhammady/tax-calculator"
+  workspaces:
+  - name: pipeline-workspace
+    persistentVolumeClaim:
+      claimName: pipelinerun-pvc
